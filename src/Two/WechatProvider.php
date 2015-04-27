@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class GithubProvider extends AbstractProvider implements ProviderInterface
+class WechatProvider extends AbstractProvider implements ProviderInterface
 {
 
     /**
@@ -17,7 +17,7 @@ class GithubProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://github.com/login/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase('https://open.weixin.qq.com/connect/qrconnect', $state);
     }
 
     /**
@@ -25,15 +25,15 @@ class GithubProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://github.com/login/oauth/access_token';
+        return 'https://api.weixin.qq.com/sns/oauth2/access_token';
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token)
+    protected function getUserByToken($token,$openid)
     {
-        $response = $this->getHttpClient()->get('https://api.github.com/user?access_token='.$token, [
+        $response = $this->getHttpClient()->get('https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid, [
             'headers' => [
                 'Accept' => 'application/vnd.github.v3+json',
             ],
@@ -48,8 +48,8 @@ class GithubProvider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User)->setRaw($user)->map([
-            'id' => $user['id'], 'nickname' => $user['login'], 'name' => array_get($user, 'name'),
-            'email' => array_get($user, 'email'), 'avatar' => $user['avatar_url'],
+            'id' => $user['unionid'], 'nickname' => $user['nickname'], 'name' => array_get($user, 'nickname'),
+            'email' => array_get($user, 'email'), 'avatar' => $user['headimgurl'],
         ]);
     }
 }
