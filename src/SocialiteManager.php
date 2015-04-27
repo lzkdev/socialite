@@ -7,6 +7,7 @@ use Laravel\Socialite\Two\GoogleProvider;
 use Laravel\Socialite\One\TwitterProvider;
 use Laravel\Socialite\Two\FacebookProvider;
 use Laravel\Socialite\One\BitbucketProvider;
+use Laravel\Socialite\Two\WechatProvider;
 use League\OAuth1\Client\Server\Twitter as TwitterServer;
 use League\OAuth1\Client\Server\Bitbucket as BitbucketServer;
 use Laravel\Socialite\One\AbstractProvider as AbstractOneProvider;

@@ -1,5 +1,5 @@
 {
-    "name": "lzkdev/socialite",
+    "name": "laravel/socialite",
     "description": "Laravel wrapper around OAuth 1 & OAuth 2 libraries. forked from laravel/socialite",
     "keywords": ["oauth", "laravel"],
     "license": "MIT",
